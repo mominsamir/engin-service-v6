@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<scala.version>2.13.10</scala.version>
 		<scala-tool.version>2.13</scala-tool.version>
 		<apache-spark.version>3.3.2</apache-spark.version>
 		<hadoop.version>3.3.4</hadoop.version>
@@ -67,6 +68,21 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala3-library_3</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+<!--
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+
+-->
+
 
 		<dependency>
 			<groupId>org.apache.spark</groupId>
@@ -161,6 +177,28 @@
 						--add-exports java.base/sun.nio.ch=ALL-UNNAMED
 					</jvmArguments>
 				</configuration>
+			</plugin>
+			<plugin>
+				<!-- see http://davidb.github.com/scala-maven-plugin -->
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
